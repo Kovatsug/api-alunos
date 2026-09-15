@@ -3,6 +3,7 @@ package com.kreuch.api_alunos.controller;
 import java.util.List;
 
 import com.kreuch.api_alunos.dto.AlunoRequest;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import com.kreuch.api_alunos.dto.AlunoResponse;
@@ -29,7 +30,7 @@ public class AlunoController {
 	}
 
 	@PostMapping("/cadastrar")
-	public AlunoResponse cadastarAluno(@RequestBody AlunoRequest request){
+	public AlunoResponse cadastarAluno(@Valid @RequestBody AlunoRequest request){
 		return service.cadastrarAluno(request);
 	}
 }
