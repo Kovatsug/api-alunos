@@ -39,4 +39,9 @@ public class AlunoController {
 		return service.atualizarAluno(id, request);
 	}
 
+	@DeleteMapping("/{id}")
+	public void deletarAluno(@PathVariable int id){
+		service.deletarAluno(id);
+	}
+
 }

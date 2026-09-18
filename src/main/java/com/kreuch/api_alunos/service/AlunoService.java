@@ -54,19 +54,6 @@ public class AlunoService {
 
 	public AlunoResponse atualizarAluno(int id, AlunoRequest request) {
 
-		/*Funciona mas o professor passou o jeito mais simples que eu n tinha pensado na hora
-		Aluno alvo = null;
-		for (Aluno a : alunos){
-			if (a.getId()==id) alvo = a;
-		}
-
-		if (alvo!= null){
-			Aluno alunoAtualizado = new Aluno(id, request.getNome(), request.getEmail(), request.getSenha(), request.getDataNascimento(), request.getMedia());
-			alunos.set(alunos.indexOf(alvo),alunoAtualizado);
-
-			return new AlunoResponse(alunoAtualizado.getId(), alunoAtualizado.getNome(), alunoAtualizado.getEmail(), alunoAtualizado.getDataNascimento(), alunoAtualizado.getMedia());
-		}*/
-
 		for (Aluno a : alunos) {
 			if (a.getId() == id) {
 				a.setNome(request.getNome());
@@ -81,4 +68,9 @@ public class AlunoService {
 		return null;
 	}
 
+	public void deletarAluno(int id){
+		for (Aluno a : alunos){
+			if (a.getId()==id) alunos.remove(a);
+		}
+	}
 }
