@@ -33,4 +33,10 @@ public class AlunoController {
 	public AlunoResponse cadastarAluno(@Valid @RequestBody AlunoRequest request){
 		return service.cadastrarAluno(request);
 	}
+
+	@PutMapping("/{id}")
+	public AlunoResponse atualizarAluno(@PathVariable int id, @Valid @RequestBody AlunoRequest request){
+		return service.atualizarAluno(id, request);
+	}
+
 }

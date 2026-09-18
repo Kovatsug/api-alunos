@@ -43,13 +43,42 @@ public class AlunoService {
 		return null;
 	}
 
-	public AlunoResponse cadastrarAluno(AlunoRequest request){
+	public AlunoResponse cadastrarAluno(AlunoRequest request) {
 		alunos.add(new Aluno(id, request.getNome(), request.getEmail(), request.getSenha(), request.getDataNascimento(), request.getMedia()));
 
 		id++;
 		Aluno alunoCadastrado = alunos.getLast();
 
 		return new AlunoResponse(alunoCadastrado.getId(), alunoCadastrado.getNome(), alunoCadastrado.getEmail(), alunoCadastrado.getDataNascimento(), alunoCadastrado.getMedia());
+	}
+
+	public AlunoResponse atualizarAluno(int id, AlunoRequest request) {
+
+		/*Funciona mas o professor passou o jeito mais simples que eu n tinha pensado na hora
+		Aluno alvo = null;
+		for (Aluno a : alunos){
+			if (a.getId()==id) alvo = a;
+		}
+
+		if (alvo!= null){
+			Aluno alunoAtualizado = new Aluno(id, request.getNome(), request.getEmail(), request.getSenha(), request.getDataNascimento(), request.getMedia());
+			alunos.set(alunos.indexOf(alvo),alunoAtualizado);
+
+			return new AlunoResponse(alunoAtualizado.getId(), alunoAtualizado.getNome(), alunoAtualizado.getEmail(), alunoAtualizado.getDataNascimento(), alunoAtualizado.getMedia());
+		}*/
+
+		for (Aluno a : alunos) {
+			if (a.getId() == id) {
+				a.setNome(request.getNome());
+				a.setEmail(request.getEmail());
+				a.setSenha(request.getSenha());
+				a.setDataNascimento(request.getDataNascimento());
+				a.setMedia(request.getMedia());
+
+				return new AlunoResponse(a.getId(), a.getNome(), a.getEmail(), a.getDataNascimento(), a.getMedia());
+			}
+		}
+		return null;
 	}
 
 }
