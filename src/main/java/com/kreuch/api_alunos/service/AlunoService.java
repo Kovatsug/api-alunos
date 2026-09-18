@@ -70,7 +70,10 @@ public class AlunoService {
 
 	public void deletarAluno(int id){
 		for (Aluno a : alunos){
-			if (a.getId()==id) alunos.remove(a);
+			if (a.getId() == id) {
+				alunos.remove(a);
+				return;
+			}
 		}
 	}
 }
