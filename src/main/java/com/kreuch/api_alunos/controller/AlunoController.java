@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.kreuch.api_alunos.dto.AlunoRequest;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.kreuch.api_alunos.dto.AlunoResponse;
@@ -30,8 +32,8 @@ public class AlunoController {
 	}
 
 	@PostMapping("/cadastrar")
-	public AlunoResponse cadastarAluno(@Valid @RequestBody AlunoRequest request){
-		return service.cadastrarAluno(request);
+	public ResponseEntity<AlunoResponse> cadastarAluno(@Valid @RequestBody AlunoRequest request){
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrarAluno(request));
 	}
 
 	@PutMapping("/{id}")
