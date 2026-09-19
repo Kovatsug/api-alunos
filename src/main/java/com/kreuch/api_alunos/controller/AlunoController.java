@@ -22,13 +22,13 @@ public class AlunoController {
 	}
 
 	@GetMapping
-	public List<AlunoResponse> listarAlunos() {
-		return service.listarAlunos();
+	public ResponseEntity<List<AlunoResponse>> listarAlunos() {
+		return ResponseEntity.status(HttpStatus.OK).body(service.listarAlunos());
 	}
 
 	@GetMapping("/{id}")
-	public AlunoResponse obterAlunoPorId(@PathVariable int id) {
-		return service.obterAlunoPorId(id);
+	public ResponseEntity<AlunoResponse> obterAlunoPorId(@PathVariable int id) {
+		return ResponseEntity.status(HttpStatus.OK).body(service.obterAlunoPorId(id));
 	}
 
 	@PostMapping("/cadastrar")
@@ -37,13 +37,14 @@ public class AlunoController {
 	}
 
 	@PutMapping("/{id}")
-	public AlunoResponse atualizarAluno(@PathVariable int id, @Valid @RequestBody AlunoRequest request){
-		return service.atualizarAluno(id, request);
+	public ResponseEntity<AlunoResponse> atualizarAluno(@PathVariable int id, @Valid @RequestBody AlunoRequest request){
+		return ResponseEntity.status(HttpStatus.OK).body(service.atualizarAluno(id, request));
 	}
 
 	@DeleteMapping("/{id}")
-	public void deletarAluno(@PathVariable int id){
+	public ResponseEntity deletarAluno(@PathVariable int id){
 		service.deletarAluno(id);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
 }
