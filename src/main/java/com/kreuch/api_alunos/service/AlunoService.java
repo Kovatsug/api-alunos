@@ -22,11 +22,10 @@ public class AlunoService {
 	}
 
 	public List<AlunoResponse> listarAlunos() {
-		List<Aluno> alunosModel = alunos;
 
-		List<AlunoResponse> alunosResponse = new ArrayList<>();
+        List<AlunoResponse> alunosResponse = new ArrayList<>();
 
-		for (Aluno a : alunosModel) {
+		for (Aluno a : alunos) {
 			alunosResponse
 					.add(new AlunoResponse(a.getId(), a.getNome(), a.getEmail(), a.getDataNascimento(), a.getMedia()));
 		}
@@ -40,10 +39,17 @@ public class AlunoService {
 				return new AlunoResponse(id, a.getNome(), a.getEmail(), a.getDataNascimento(), a.getMedia());
 			}
 		}
-		return null;
+		throw new RuntimeException("Aluno não encontrado");
 	}
 
 	public AlunoResponse cadastrarAluno(AlunoRequest request) {
+
+		//if (alunos.stream().anyMatch(aluno -> aluno.getEmail().equals(request.getEmail()))) throw new RuntimeException("Email ja cadastrado");
+
+		for (Aluno a : alunos){
+			if (a.getEmail().equals(request.getEmail())) throw new RuntimeException("Email ja cadastrado");
+		}
+
 		alunos.add(new Aluno(id, request.getNome(), request.getEmail(), request.getSenha(), request.getDataNascimento(), request.getMedia()));
 
 		id++;
@@ -65,7 +71,7 @@ public class AlunoService {
 				return new AlunoResponse(a.getId(), a.getNome(), a.getEmail(), a.getDataNascimento(), a.getMedia());
 			}
 		}
-		return null;
+		throw new RuntimeException("Aluno não encontrado");
 	}
 
 	public void deletarAluno(int id){
