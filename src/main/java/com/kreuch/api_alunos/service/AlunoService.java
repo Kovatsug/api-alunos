@@ -1,10 +1,11 @@
 package com.kreuch.api_alunos.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.kreuch.api_alunos.dto.AlunoRequest;
+import com.kreuch.api_alunos.exception.AlunoNaoEncontradoException;
+import com.kreuch.api_alunos.exception.EmailJaCadastradoException;
 import org.springframework.stereotype.Service;
 
 import com.kreuch.api_alunos.dto.AlunoResponse;
@@ -39,7 +40,7 @@ public class AlunoService {
 				return new AlunoResponse(id, a.getNome(), a.getEmail(), a.getDataNascimento(), a.getMedia());
 			}
 		}
-		throw new RuntimeException("Aluno não encontrado");
+		throw new AlunoNaoEncontradoException("Aluno não encontrado");
 	}
 
 	public AlunoResponse cadastrarAluno(AlunoRequest request) {
@@ -47,7 +48,7 @@ public class AlunoService {
 		//if (alunos.stream().anyMatch(aluno -> aluno.getEmail().equals(request.getEmail()))) throw new RuntimeException("Email ja cadastrado");
 
 		for (Aluno a : alunos){
-			if (a.getEmail().equalsIgnoreCase(request.getEmail())) throw new RuntimeException("Email ja cadastrado");
+			if (a.getEmail().equalsIgnoreCase(request.getEmail())) throw new EmailJaCadastradoException("Email ja cadastrado");
 		}
 
 		Aluno alunoCadastrado = (new Aluno(id++, request.getNome(), request.getEmail(), request.getSenha(), request.getDataNascimento(), request.getMedia()));
@@ -61,7 +62,7 @@ public class AlunoService {
 
 
 		for (Aluno a : alunos){
-			if (a.getEmail().equalsIgnoreCase(request.getEmail()) && (a.getId() != id)) throw new RuntimeException("Email ja cadastrado");
+			if (a.getEmail().equalsIgnoreCase(request.getEmail()) && (a.getId() != id)) throw new EmailJaCadastradoException("Email ja cadastrado");
 		}
 
 		for (Aluno a : alunos) {
@@ -76,7 +77,7 @@ public class AlunoService {
 				return new AlunoResponse(a.getId(), a.getNome(), a.getEmail(), a.getDataNascimento(), a.getMedia());
 			}
 		}
-		throw new RuntimeException("Aluno não encontrado");
+		throw new AlunoNaoEncontradoException("Aluno não encontrado");
 	}
 
 	public void deletarAluno(int id){
