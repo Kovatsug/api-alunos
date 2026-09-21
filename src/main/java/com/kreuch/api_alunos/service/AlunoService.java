@@ -47,21 +47,26 @@ public class AlunoService {
 		//if (alunos.stream().anyMatch(aluno -> aluno.getEmail().equals(request.getEmail()))) throw new RuntimeException("Email ja cadastrado");
 
 		for (Aluno a : alunos){
-			if (a.getEmail().equals(request.getEmail())) throw new RuntimeException("Email ja cadastrado");
+			if (a.getEmail().equalsIgnoreCase(request.getEmail())) throw new RuntimeException("Email ja cadastrado");
 		}
 
-		alunos.add(new Aluno(id, request.getNome(), request.getEmail(), request.getSenha(), request.getDataNascimento(), request.getMedia()));
+		Aluno alunoCadastrado = (new Aluno(id++, request.getNome(), request.getEmail(), request.getSenha(), request.getDataNascimento(), request.getMedia()));
 
-		id++;
-		Aluno alunoCadastrado = alunos.getLast();
+		alunos.add(alunoCadastrado);
 
 		return new AlunoResponse(alunoCadastrado.getId(), alunoCadastrado.getNome(), alunoCadastrado.getEmail(), alunoCadastrado.getDataNascimento(), alunoCadastrado.getMedia());
 	}
 
 	public AlunoResponse atualizarAluno(int id, AlunoRequest request) {
 
+
+		for (Aluno a : alunos){
+			if (a.getEmail().equalsIgnoreCase(request.getEmail()) && (a.getId() != id)) throw new RuntimeException("Email ja cadastrado");
+		}
+
 		for (Aluno a : alunos) {
 			if (a.getId() == id) {
+
 				a.setNome(request.getNome());
 				a.setEmail(request.getEmail());
 				a.setSenha(request.getSenha());
